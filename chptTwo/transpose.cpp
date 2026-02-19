@@ -3,20 +3,11 @@
 #include <ctime>
 #include <string>
 
-// int **matrix;
 int rows, cols, rowsT, colsT;
 
-int** allocate() {
+int** allocate(int rows, int cols) {
+    std::cout << "Starting allocate\n";
     int **matrix = (int**) malloc(rows * sizeof(int *));
-    for (int i = 0; i < cols; i++) {
-        matrix[i] = (int*) malloc(cols * sizeof(int*));
-    }
-
-    return matrix;
-}
-
-int** allocateT() {
-    int **matrix = (int**) malloc(cols * sizeof(int *));
     for (int i = 0; i < rows; i++) {
         matrix[i] = (int*) malloc(cols * sizeof(int*));
     }
@@ -25,6 +16,7 @@ int** allocateT() {
 }
 
 void populate(int** matrix) {
+    std::cout << "Starting populate\n";
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             matrix[i][j] = std::rand() % 10;
@@ -33,6 +25,7 @@ void populate(int** matrix) {
 }
 
 void printMatrix(int** matrix, int rows, int cols) {
+    std::cout << "Starting printMatrix\n";
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             std::cout << matrix[i][j] << " ";
@@ -42,6 +35,7 @@ void printMatrix(int** matrix, int rows, int cols) {
 }
 
 int** transposeMatrix(int** matrix, int** matrixT) {
+    std::cout << "Starting transpose\n";
     for (int j = 0; j < rows; j++) {
         for (int i = 0; i < cols; i++) {
             matrixT[i][j] = matrix[j][i];
@@ -62,17 +56,20 @@ int main(int argc, char** argv) {
     }
     
     rows = std::stoi(*&argv[1]);
-    colsT = std::stoi(*&argv[1]);
+    colsT = rows;
     cols = std::stoi(*&argv[2]);
-    rowsT = std::stoi(*&argv[2]);
+    rowsT = cols;
 
-
+    // Seeding srand
     srand(time(NULL));
-    int** matrix = allocate();
+
+    // Creating matrix of correct size
+    int** matrix = allocate(rows, cols);
     populate(matrix);
     printMatrix(matrix, rows, cols);
 
-    int** matrixT = allocateT();
+    // Creating matrix to transpose
+    int** matrixT = allocate(rowsT, colsT);
     matrixT = transposeMatrix(matrix, matrixT);
     std::cout << "\n";
     printMatrix(matrixT, rowsT, colsT);
