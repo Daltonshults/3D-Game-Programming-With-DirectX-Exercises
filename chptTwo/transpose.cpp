@@ -6,7 +6,6 @@
 int rows, cols, rowsT, colsT;
 
 int** allocate(int rows, int cols) {
-    std::cout << "Starting allocate\n";
     int **matrix = (int**) malloc(rows * sizeof(int *));
     for (int i = 0; i < rows; i++) {
         matrix[i] = (int*) malloc(cols * sizeof(int*));
@@ -16,7 +15,6 @@ int** allocate(int rows, int cols) {
 }
 
 void populate(int** matrix) {
-    std::cout << "Starting populate\n";
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             matrix[i][j] = std::rand() % 10;
@@ -25,7 +23,6 @@ void populate(int** matrix) {
 }
 
 void printMatrix(int** matrix, int rows, int cols) {
-    std::cout << "Starting printMatrix\n";
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             std::cout << matrix[i][j] << " ";
@@ -35,7 +32,6 @@ void printMatrix(int** matrix, int rows, int cols) {
 }
 
 int** transposeMatrix(int** matrix, int** matrixT) {
-    std::cout << "Starting transpose\n";
     for (int j = 0; j < rows; j++) {
         for (int i = 0; i < cols; i++) {
             matrixT[i][j] = matrix[j][i];
@@ -43,6 +39,13 @@ int** transposeMatrix(int** matrix, int** matrixT) {
     }
 
     return matrixT;
+}
+
+void freeMatrix(int** matrix, int rows) {
+    for (int i = 0; i < rows; i++) {
+        std::free(matrix[i]);
+    }
+    std::free(matrix);
 }
 
 int main(int argc, char** argv) {
@@ -74,6 +77,7 @@ int main(int argc, char** argv) {
     std::cout << "\n";
     printMatrix(matrixT, rowsT, colsT);
 
-
+    freeMatrix(matrix, rows);
+    freeMatrix(matrixT, rowsT);
     return 0;
 }
