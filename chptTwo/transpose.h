@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
+#include "matrixPrinter.h"
+#include "matrix.h"
 
 class Transpose {
 public:
@@ -11,6 +13,7 @@ public:
     void run();
 
 private:
+    Matrix m;
     int rows;
     int cols;
     int rowsT;
@@ -18,8 +21,8 @@ private:
     int** matrix;
     int** matrixT;
 
-    int** allocate(int rows, int cols);
-    void populate(int** matrix);
+    // int** allocate(int rows, int cols);
+    // void populate(int** matrix);
     void transposeMatrix(int** matrix, int** matrixT);
     void freeMatrix(int** matrix, int rows);
 };
