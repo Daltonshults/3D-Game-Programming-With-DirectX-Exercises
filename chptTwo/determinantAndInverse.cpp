@@ -22,11 +22,9 @@ int** allocate(int rows, int cols) {
 int twoByTwoDet(int** matrix) {
     return (int) ((matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]));
 }
-
-int threeByThreeDet(int** matrix) {
-    int** mats[3];
-    for (int i = 0; i < 3; i ++) {
-        mats[i] = allocate(2, 2);
+void populateMats(int*** mats, int** matrix, int indexes) {
+    for (int i = 0; i < indexes; i ++) {
+        mats[i] = allocate(indexes-1, indexes-1);
     }
 
     int currentI = 0;
@@ -34,16 +32,16 @@ int threeByThreeDet(int** matrix) {
     int rowI = 0;
     int colJ = 0;
     // For every matrix in mats
-    for (int index = 0; index < 3; index++) {
+    for (int index = 0; index < indexes; index++) {
 
         // For every i in matrix[index]
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < indexes; i++) {
 
             // If row matches current row skip
             if (i != rowI) {
 
                 // For every j in matrix[index][i]
-                for(int j = 0; j < 3; j++) {
+                for(int j = 0; j < indexes; j++) {
 
                     // If collumn matches skip
                     if (j != colJ){
@@ -64,50 +62,17 @@ int threeByThreeDet(int** matrix) {
         // Increment the column we aren't using
         colJ++;
     }
+}
+
+int threeByThreeDet(int** matrix) {
+    int** mats[3];
+    populateMats(mats, matrix, 3);
     return matrix[0][0] * twoByTwoDet(mats[0]) - matrix[0][1] * twoByTwoDet(mats[1]) + matrix[0][2] * twoByTwoDet(mats[2]); 
 }
 
 int fourByfourDet(int** matrix) {
     int** mats[4];
-    for (int i = 0; i < 4; i ++) {
-        mats[i] = allocate(3, 3);
-    }
-
-    int currentI = 0;
-    int currentJ = 0;
-    int rowI = 0;
-    int colJ = 0;
-    // For every matrix in mats
-    for (int index = 0; index < 4; index++) {
-
-        // For every i in matrix[index]
-        for (int i = 0; i < 4; i++) {
-
-            // If row matches current row skip
-            if (i != rowI) {
-
-                // For every j in matrix[index][i]
-                for(int j = 0; j < 4; j++) {
-
-                    // If collumn matches skip
-                    if (j != colJ){
-                        mats[index][currentI][currentJ] = matrix[i][j];
-                        currentJ++;                        
-                    }
-                }
-
-                // reset currentJ and increment currentI
-                currentJ = 0;
-                currentI++;
-            }
-        }
-        // reset currentJ and currentI
-        currentJ = 0;
-        currentI = 0;
-        
-        // Increment the column we aren't using
-        colJ++;
-    }
+    populateMats(mats, matrix, 4);
     return matrix[0][0] * threeByThreeDet(mats[0]) - matrix[0][1] * threeByThreeDet(mats[1]) + matrix[0][2] * threeByThreeDet(mats[2]) - matrix[0][3] * threeByThreeDet(mats[3]); 
 }
 
