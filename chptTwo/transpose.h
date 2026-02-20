@@ -20,7 +20,6 @@ private:
 
     int** allocate(int rows, int cols);
     void populate(int** matrix);
-    void printMatrix(int** matrix, int rows, int cols);
     void transposeMatrix(int** matrix, int** matrixT);
     void freeMatrix(int** matrix, int rows);
 };
