@@ -67,6 +67,50 @@ int threeByThreeDet(int** matrix) {
     return matrix[0][0] * twoByTwoDet(mats[0]) - matrix[0][1] * twoByTwoDet(mats[1]) + matrix[0][2] * twoByTwoDet(mats[2]); 
 }
 
+int fourByfourDet(int** matrix) {
+    int** mats[4];
+    for (int i = 0; i < 4; i ++) {
+        mats[i] = allocate(3, 3);
+    }
+
+    int currentI = 0;
+    int currentJ = 0;
+    int rowI = 0;
+    int colJ = 0;
+    // For every matrix in mats
+    for (int index = 0; index < 4; index++) {
+
+        // For every i in matrix[index]
+        for (int i = 0; i < 4; i++) {
+
+            // If row matches current row skip
+            if (i != rowI) {
+
+                // For every j in matrix[index][i]
+                for(int j = 0; j < 4; j++) {
+
+                    // If collumn matches skip
+                    if (j != colJ){
+                        mats[index][currentI][currentJ] = matrix[i][j];
+                        currentJ++;                        
+                    }
+                }
+
+                // reset currentJ and increment currentI
+                currentJ = 0;
+                currentI++;
+            }
+        }
+        // reset currentJ and currentI
+        currentJ = 0;
+        currentI = 0;
+        
+        // Increment the column we aren't using
+        colJ++;
+    }
+    return matrix[0][0] * threeByThreeDet(mats[0]) - matrix[0][1] * threeByThreeDet(mats[1]) + matrix[0][2] * threeByThreeDet(mats[2]) - matrix[0][3] * threeByThreeDet(mats[3]); 
+}
+
 void printMatrix(int** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -78,14 +122,13 @@ void printMatrix(int** matrix, int rows, int cols) {
 
 int main(int argc, char** argv) {
 
-    int ints[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
-    int** matrix = allocate(3, 3);
-    populateFromList(matrix, ints,3,3);
+    int ints[] = {1, 3, 5, 9, 1, 3, 1, 7, 4, 3, 9, 7, 5, 2, 0, 9};
+    int** matrix = allocate(4, 4);
+    populateFromList(matrix, ints, 4, 4);
 
-    printMatrix(matrix, 3, 3);
-    // int twoDet = twoByTwoDet(matrix);
-    int threeDet = threeByThreeDet(matrix);
-    std::cout << threeDet << "\n";
+    printMatrix(matrix, 4, 4);
+    int fourDet = fourByfourDet(matrix);
+    std::cout << fourDet << "\n";
 
 
 
