@@ -67,13 +67,20 @@ void populateMats(int*** mats, int** matrix, int indexes) {
 int threeByThreeDet(int** matrix) {
     int** mats[3];
     populateMats(mats, matrix, 3);
-    return matrix[0][0] * twoByTwoDet(mats[0]) - matrix[0][1] * twoByTwoDet(mats[1]) + matrix[0][2] * twoByTwoDet(mats[2]); 
+
+    return matrix[0][0] * twoByTwoDet(mats[0]) 
+        - matrix[0][1] * twoByTwoDet(mats[1]) 
+        + matrix[0][2] * twoByTwoDet(mats[2]); 
 }
 
 int fourByfourDet(int** matrix) {
     int** mats[4];
     populateMats(mats, matrix, 4);
-    return matrix[0][0] * threeByThreeDet(mats[0]) - matrix[0][1] * threeByThreeDet(mats[1]) + matrix[0][2] * threeByThreeDet(mats[2]) - matrix[0][3] * threeByThreeDet(mats[3]); 
+
+    return matrix[0][0] * threeByThreeDet(mats[0])
+        - matrix[0][1] * threeByThreeDet(mats[1]) 
+        + matrix[0][2] * threeByThreeDet(mats[2]) 
+        - matrix[0][3] * threeByThreeDet(mats[3]); 
 }
 
 void printMatrix(int** matrix, int rows, int cols) {
