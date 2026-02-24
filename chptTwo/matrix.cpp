@@ -8,6 +8,16 @@ int** Matrix::allocate(int rows, int cols) {
 
     return matrix;
 }
+
+float** Matrix::allocateF(int rows, int cols) {
+    float **matrix = (float**) std::malloc(rows * sizeof(float *));
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = (float*) std::malloc(cols * sizeof(float*));
+    }
+
+    return matrix;
+}
+
 int** Matrix::populate(int** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {

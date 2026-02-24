@@ -16,8 +16,9 @@ int main(int argc, char** argv) {
     
     rows = std::stoi(*&argv[1]);
     cols = std::stoi(*&argv[2]);
+    int ints[] = {1, 3, 5, 9, 1, 3, 1, 7, 4, 3, 9, 7, 5, 2, 0, 9};
 
-    Transpose t(rows, cols);
+    Transpose t(rows, cols, ints);
     t.run();
     return 0;
 }

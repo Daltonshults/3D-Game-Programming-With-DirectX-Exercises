@@ -1,26 +1,26 @@
 #include "transpose.h"
 
-Transpose::Transpose(int rows, int cols)
-    :rows(rows), cols(cols), rowsT(cols), colsT(rows), matrix(nullptr), matrixT(nullptr)  
+Transpose::Transpose(int** matrix, int rows, int cols)
+    :rows(rows), cols(cols), rowsT(cols), colsT(rows), matrix(matrix), matrixT(nullptr)  
 {
     std::srand(time(NULL));
     matrix = m.allocate(rows, cols);
     matrixT = m.allocate(rowsT, colsT);
-    matrix = m.populate(this->matrix, rows, cols);
-    transposeMatrix(this->matrix, this->matrixT);
+    matrixT = transposeMatrix(matrix, this->matrixT);
 }
 
-Transpose::~Transpose() {
-    freeMatrix(this->matrix, this->rows);
-    freeMatrix(this->matrixT, this->rowsT);
+
+int** Transpose::getMatrixT() {
+    return this->matrixT;
 }
 
-void Transpose::transposeMatrix(int** matrix, int** matrixT) {
+int** Transpose::transposeMatrix(int** matrix, int** matrixT) {
     for (int j = 0; j < this->rows; j++) {
         for (int i = 0; i < this->cols; i++) {
             this->matrixT[i][j] = this->matrix[j][i];
         }
     }
+    return matrixT;
 }
 
 void Transpose::freeMatrix(int** matrix, int rows) {
